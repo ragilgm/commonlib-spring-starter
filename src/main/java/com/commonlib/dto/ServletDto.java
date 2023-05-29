@@ -1,9 +1,6 @@
 package com.commonlib.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.Map;
 
@@ -11,6 +8,7 @@ import java.util.Map;
 @ToString
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class ServletDto {
     private String uri;
     private String remoteAddress;

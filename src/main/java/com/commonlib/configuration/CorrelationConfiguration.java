@@ -1,6 +1,7 @@
 package com.commonlib.configuration;
 
 import com.commonlib.dto.ServletDto;
+import com.commonlib.service.CustomServletService;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +31,9 @@ public class CorrelationConfiguration extends OncePerRequestFilter {
     @Autowired
     private LoggerConfiguration loggerConfiguration;
 
+    @Autowired
+    private CustomServletService customServletService;
+
     /**
      * FilterInternal ini digunakan untuk
      * <ul>
@@ -54,7 +58,6 @@ public class CorrelationConfiguration extends OncePerRequestFilter {
     )
             throws ServletException, IOException {
         CachedBodyHttpServletRequestConfiguration cachedBodyHttpServletRequest = new CachedBodyHttpServletRequestConfiguration(request);
-
         // Get correlation ID (or generate if not present)
         final String requestCorrelationId = extractOrGenerateCorrelationId(cachedBodyHttpServletRequest);
 
@@ -63,6 +66,7 @@ public class CorrelationConfiguration extends OncePerRequestFilter {
 
         if (this.logRequest) {
             ServletDto servletDto = loggerConfiguration.logRequest(cachedBodyHttpServletRequest);
+             customServletService.setServletDto(servletDto);
             cachedBodyHttpServletRequest.setServletDto(servletDto);
         }
 

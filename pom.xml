@@ -9,7 +9,7 @@
     </parent>
     <groupId>com.commonlib</groupId>
     <artifactId>commonlib</artifactId>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.8-SNAPSHOT</version>
     <name>commonlib</name>
     <description>CommonLib Starter</description>
     <properties>

@@ -9,7 +9,7 @@
     </parent>
     <groupId>com.commonlib</groupId>
     <artifactId>commonlib</artifactId>
-    <version>0.0.8-SNAPSHOT</version>
+    <version>0.0.9-SNAPSHOT</version>
     <name>commonlib</name>
     <description>CommonLib Starter</description>
     <properties>
@@ -36,6 +36,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
+            <version>5.5.4.Final</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -8,6 +8,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -30,6 +31,9 @@ public class RacingConditionAspect {
     @Autowired
     private SignatureGeneratorService signatureGeneratorService;
 
+    @Value("${doku.gateway.redis.request.expired.key}")
+    private int expiredTime;
+
 
     private static final String SEPARATOR_COLON = "::";
 
@@ -44,7 +48,7 @@ public class RacingConditionAspect {
             log.debug("count : {}", count);
 
             if (count == 1) {
-                redisTemplate.expire(key, 10, TimeUnit.SECONDS);
+                redisTemplate.expire(key, expiredTime, TimeUnit.SECONDS);
                 isAllowed=true;
             }
 
@@ -61,14 +65,14 @@ public class RacingConditionAspect {
     }
 
     private String buildKey(ServletDto servletDto) throws NoSuchAlgorithmException, InvalidKeyException {
-        StringBuilder stringBuilder=  new StringBuilder();
-        stringBuilder.append(servletDto.getMethod());
-        stringBuilder.append(SEPARATOR_COLON);
-        stringBuilder.append(servletDto.getUri());
-        stringBuilder.append(servletDto.getParams());
-
-        signatureGeneratorService.createSignature(stringBuilder.toString());
-        return stringBuilder.toString();
+        String stringBuilder = servletDto.getMethod() +
+                SEPARATOR_COLON +
+                servletDto.getUri() +
+                SEPARATOR_COLON +
+                servletDto.getParams() +
+                SEPARATOR_COLON +
+                servletDto.getPayload();
+        return signatureGeneratorService.createSignature(stringBuilder);
     }
 
 

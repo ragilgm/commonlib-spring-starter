@@ -3,8 +3,6 @@ package com.commonlib.controller;
 import com.commonlib.annotation.LogExecutionTime;
 import com.commonlib.annotation.LogRequestResponse;
 import com.commonlib.annotation.RacingConditionRejection;
-import com.commonlib.validator.constraint.NameMustExist;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +20,7 @@ public class TestController {
     @LogExecutionTime
     @LogRequestResponse
     @RacingConditionRejection
-    public String getTest(@NameMustExist @NotNull String name){
+    public String getTest( @NotNull String name){
         throw new NoSuchElementException("not found boss");
     }
 

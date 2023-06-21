@@ -31,7 +31,7 @@ public class RacingConditionAspect {
     @Autowired
     private SignatureGeneratorService signatureGeneratorService;
 
-    @Value("${doku.gateway.redis.request.expired.key}")
+    @Value("${commonlib.expired.time}")
     private int expiredTime;
 
 
